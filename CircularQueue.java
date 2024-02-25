@@ -1,143 +1,92 @@
-public class CircularQueue {
+public class CircularQueue implements QueueInterface {
 
-    // nested node
-    private static class Node {
-        private int element;
-        private Node next;
+    private static final int maxCapacity = 100;
+    private int front;
+    private int storedSize;
+    private int[] array;
 
-        public Node(int e, Node n) {
-            element = e;
-            next = n;
-        }
-
-        public Node(int e) {
-            this(e, null);
-        }
-
-        public int getElement() {
-            return element;
-        }
-
-        public Node getNext() {
-            return next;
-        }
-
-        public void setNext(Node n) {
-            next = n;
-        }
+    public CircularQueue(final int capacity) {
+        array = new int[capacity];
     }
 
-    //
-    private Node tail = null;
-    private int size = 0;
-
-    // methods
+    @Override
     public int size() {
-        return size;
+        return this.storedSize;
     }
 
+    @Override
     public boolean isEmpty() {
-        return size == 0;
+        return this.storedSize == 0;
+    }
+
+    public boolean isFull() {
+        return this.storedSize == this.array.length;
     }
 
     public int front() {
         if (isEmpty()) {
-            throw new IllegalStateException("List is empty");
+            throw new IllegalStateException("Queue is empty");
         }
-        return tail.getNext().getElement();
+        return array[front];
+    }
+
+    public Integer first(){
+        if (isEmpty()) {
+            return null;
+        }
+        return array[front];
     }
 
     public int rear() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        return tail.getElement();
+        return array[(front + storedSize - 1) % array.length];
     }
 
-
-    public void addFirst(Node e) {
-        if (size == 0) {
-            tail = new Node(e.getElement(), null);
-            tail.setNext(tail);
-        } else {
-            Node newest = new Node(e.getElement(), tail.getNext());
-            tail.setNext(newest);
+    @Override
+    public void enqueue(int e) {
+        if (isFull()) {
+            throw new IllegalStateException("Queue is full");
         }
-        size++;
+        int avail = (this.front + this.storedSize) % array.length;
+        array[avail] = e;
+        this.storedSize++;
     }
 
-    public void enqueue(Node n) {
-        addFirst(n);
-        tail = tail.getNext();
-    }
-
+    @Override
     public int dequeue() {
         if (isEmpty()) {
-            throw new IllegalStateException("List is empty");
+            throw new IllegalStateException("Queue is empty");
         }
-        Node head = tail.getNext();
-        if (head == tail) {
-            tail = null;
-        } else {
-            tail.setNext(head.getNext());
-            size--;
-        }
-        return head.getElement();
-    }
-
-    public void reverse() {
-        if (isEmpty()) {
-            throw new IllegalStateException("List is empty");
-        }
-
-        Node prev = null;
-        Node current = tail.getNext();
-        Node next;
-
-        do {
-            next = current.getNext();
-            current.setNext(prev);
-            prev = current;
-            current = next;
-        } while (current != tail.getNext());
-
-        tail.setNext(prev);
+        int element = first();
+        array[front] = 0; // Assuming 0 represents an empty slot
+        this.front = (this.front + 1) % array.length;
+        this.storedSize--;
+        return element;
     }
 
     public boolean checkInQueue(int value) {
-        if (isEmpty()) return false;
-
-        Node current = tail.getNext();
-
-        do {
-            if (current.getElement() == value) {
+        for (int i = 0; i < storedSize; i++) {
+            if (array[(front + i) % array.length] == value) {
                 return true;
             }
-            current = current.getNext();
-        } while (current != tail.getNext());
-
+        }
         return false;
     }
 
     public void remove(int value) {
-        if (isEmpty()) return;
-
-        tail.setNext(remove(tail.getNext(), value));
-
-        if (tail.getNext().getElement() == value) {
-            tail.setNext(tail.getNext().getNext());
+        for (int i = 0; i < storedSize; i++) {
+            if (array[(front + i) % array.length] == value) {
+                int indexToRemove = (front + i) % array.length;
+                System.arraycopy(array, indexToRemove + 1, array, indexToRemove, storedSize - i - 1);
+                array[(front + storedSize - 1) % array.length] = 0;
+                storedSize--;
+                return;
+            }
         }
-    }
-
-    public Node remove(Node current, int value) {
-        if (current.getNext().getElement() == value) {
-            current.setNext(current.getNext().getNext());
-            return current;
-        }
-        return remove(current.getNext(), value);
     }
 }
-
 
 
 

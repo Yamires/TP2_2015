@@ -46,7 +46,7 @@ public class SinglyLinkedList {
         size++;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return size == 0;
     }
 
@@ -204,6 +204,7 @@ public class SinglyLinkedList {
             addInOrder(current.getElement());
             current = next;
         }
+        head = sortedHead;
     }
 
 
