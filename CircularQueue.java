@@ -44,7 +44,7 @@ public class CircularQueue {
         if (isEmpty()) {
             throw new IllegalStateException("List is empty");
         }
-        return tail.getNext().getNext().getElement();
+        return tail.getNext().getElement();
     }
 
     public int rear() {
@@ -96,12 +96,12 @@ public class CircularQueue {
 
         do {
             next = current.getNext();
-            current.setNext(prev); // Fixing this line
+            current.setNext(prev);
             prev = current;
             current = next;
         } while (current != tail.getNext());
 
-        tail.setNext(prev); // Fixing this line
+        tail.setNext(prev);
     }
 
     public boolean checkInQueue(int value) {
@@ -132,9 +132,9 @@ public class CircularQueue {
     public Node remove(Node current, int value) {
         if (current.getNext().getElement() == value) {
             current.setNext(current.getNext().getNext());
-            return current; // Return the current node after removal
+            return current;
         }
-        return remove(current.getNext(), value); // Return the result of the recursive call
+        return remove(current.getNext(), value);
     }
 }
 
