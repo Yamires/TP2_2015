@@ -45,8 +45,8 @@ public class SinglyLinkedList {
         }
         size++;
     }
-
-    private boolean isEmpty() {
+    // public boolean isEmpty(): Renvoie un boolean true si la liste est vide et faux sinon
+    public boolean isEmpty() {
         return size == 0;
     }
 
@@ -77,7 +77,6 @@ public class SinglyLinkedList {
     }
 
     // public int removeLast(): supprime le dernier élément dans la liste
-    // logique error here
     public void removeLast() {
         if (isEmpty()) {
             throw new IllegalStateException("The list is empty");
@@ -125,14 +124,13 @@ public class SinglyLinkedList {
         return current.getElement();
     }
 
+    // public void removeValue(int value): retirer tous les éléments avec une certaine valeur (récursif)
     public void removeValue(int value) {
         head = removeValueRecur(head, value);
     }
-
-    // public void removeValue(int value): retirer tous les éléments avec une certaine valeur (récursif)
-    // no modification to the head needed
+    
     private Node removeValueRecur(Node current, int value) {
-        if (current == null) {
+        if (current == null) {       
             return null;
         }
         if (current.element == value) {
@@ -196,7 +194,6 @@ public class SinglyLinkedList {
         if (head == null || head.next == null) {
             return;
         }
-
         Node current = head;
 
         while (current != null) {
@@ -204,6 +201,7 @@ public class SinglyLinkedList {
             addInOrder(current.getElement());
             current = next;
         }
+        head = sortedHead;
     }
 
 
@@ -220,6 +218,7 @@ public class SinglyLinkedList {
             return newNode;
         } else {
             sortedHead.next = addInOrderRecursive(sortedHead.next, value);
+
             return sortedHead;
         }
     }
