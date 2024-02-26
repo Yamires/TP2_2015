@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 public class GameSolver {
 
     public static class Grid {
@@ -17,12 +16,13 @@ public class GameSolver {
         }
     }
 
-
-    public static int transmit(int[][] grille) {
+    // Fonction pour transmettre les infections dans la grille
+    public static int solvingGame(int[][] grille) {
         Queue queue = new Queue();
         int rows = grille.length;
         int columns = grille[0].length;
 
+        // Recherche des positions initiales des zombies pour les placer dans une file
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (grille[i][j] == 2) {
@@ -31,12 +31,17 @@ public class GameSolver {
             }
         }
 
+        // Définition des offsets
         int[][] offsets = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int iterations = 0;
         int newInfections = 0;
 
+        // Boucle principale pour transmettre les infections
         while (!queue.isEmpty()) {
             iterations++;
+            System.out.println("Iteration: " + iterations);
+
+            printGrid(grille); // Afficher la grille à chaque itération
 
             int size = queue.size();
             for (int k = 0; k < size; k++) {
@@ -44,6 +49,7 @@ public class GameSolver {
                 int row = position / columns;
                 int col = position % columns;
 
+                // Vérifier les cellules voisines
                 for (int[] offset : offsets) {
                     int nextRow = row + offset[0];
                     int nextCol = col + offset[1];
@@ -56,22 +62,19 @@ public class GameSolver {
             }
         }
 
-        if (newInfections == 0) {
-            return -1;
-        }
 
-        // Check if there are still 1 in the grid
+        // Vérifier s'il reste des cellules non infectées dans la grille
         for (int[] row : grille) {
             for (int cell : row) {
                 if (cell == 1) {
-                    return -1;
+                    return -1; // Retourne -1 s'il reste des cellules non infectées
                 }
             }
         }
         return iterations;
     }
 
-
+    // Fonction principale
     public static void main(String[] args) {
         int[][][] grids = new int[100][100][100];
 
@@ -85,7 +88,7 @@ public class GameSolver {
                 int m = Integer.parseInt(parts[0]);
                 int n = Integer.parseInt(parts[1]);
 
-                // Parse grid data
+                // Analyse des données de la grille
                 int[][] grid = new int[m][n];
                 for (int i = 0; i < m; i++) {
                     line = br.readLine();
@@ -101,14 +104,14 @@ public class GameSolver {
             e.printStackTrace();
         }
 
-
+        // Transmission pour chaque grille
         for (int i = 0; i < gridCount; i++) {
-            // Example: print each grid
-            transmit(grids[i]);
-            printGrid(grids[i]);
+            //solvingGame(grids[i]);
+            System.out.println("Game solved in " +  solvingGame(grids[i]) + " iterations");
         }
     }
 
+    // Fonction pour afficher la grille
     public static void printGrid(int[][] grid) {
         for (int[] row : grid) {
             for (int cell : row) {
@@ -119,6 +122,3 @@ public class GameSolver {
         System.out.println();
     }
 }
-
-
-

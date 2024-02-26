@@ -1,4 +1,4 @@
-public class SinglyLinkedList {
+public class LinkedList {
 
     // nested Node Class
     private static class Node {
@@ -33,7 +33,7 @@ public class SinglyLinkedList {
     private int size = 0;
 
     // constructor
-    public SinglyLinkedList() {
+    public LinkedList() {
     }
 
     // public void addFirst(int element): Ajoute un élément au début de la liste
