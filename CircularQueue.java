@@ -108,14 +108,23 @@ public class CircularQueue implements QueueInterface {
 
     // Retire la première apparition de la valeur
     public void remove(int value) {
-        for (int i = 0; i < storedSize; i++) {
-            if (array[(front + i) % array.length] == value) {
-                int indexToRemove = (front + i) % array.length;
-                System.arraycopy(array, indexToRemove + 1, array, indexToRemove, storedSize - i - 1);
-                array[(front + storedSize - 1) % array.length] = 0;
-                storedSize--;
-                return;
-            }
+        remove(value, 0);
+    }
+
+    // remove helper
+    private void remove(int value, int currentIndex) {
+        if (currentIndex >= storedSize) {
+            return;
         }
+
+        if (array[(front + currentIndex) % array.length] == value) {
+            int indexToRemove = (front + currentIndex) % array.length;
+            System.arraycopy(array, indexToRemove + 1, array, indexToRemove, storedSize - currentIndex - 1);
+            array[(front + storedSize - 1) % array.length] = 0;
+            storedSize--;
+            return;
+        }
+
+        remove(value, currentIndex + 1);
     }
 }

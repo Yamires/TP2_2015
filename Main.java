@@ -1,7 +1,13 @@
+// Yamir Alejandro Poldo Silva
+// Luis Andres Eche Guzman
+// TP2 -- IFT2015
+// 25/02/2024
+
+
 public class Main {
       public static void main(String[] args){
 
-             LinkedList SinglyLinkedList=new LinkedList();
+            LinkedList SinglyLinkedList=new LinkedList();
             //On crée une liste ayant 6 valeur différente et non trier
             SinglyLinkedList.addFirst(40);
             SinglyLinkedList.addLast(20);
