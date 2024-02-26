@@ -1,7 +1,7 @@
 public class Main {
       public static void main(String[] args){
-            /*
-        LinkedList SinglyLinkedList=new LinkedList();
+
+             LinkedList SinglyLinkedList=new LinkedList();
             //On crée une liste ayant 6 valeur différente et non trier
             SinglyLinkedList.addFirst(40);
             SinglyLinkedList.addLast(20);
@@ -23,7 +23,7 @@ public class Main {
             System.out.println(SinglyLinkedList.maxValue());
             System.out.println(SinglyLinkedList.checkInList(40));
             System.out.println(SinglyLinkedList.returnNLast(2));
-            */
+
 
             CircularQueue CircularQueue = new CircularQueue(8);
             CircularQueue.enqueue(40);
@@ -35,10 +35,10 @@ public class Main {
             CircularQueue.reverse();
             CircularQueue.print();
 
-            //CircularQueue.dequeue();
-            //System.out.println(CircularQueue.size());
-            //System.out.println(CircularQueue.isEmpty());
-            //System.out.println(CircularQueue.front());
-            //.out.println(CircularQueue.rear());
+            CircularQueue.dequeue();
+            System.out.println(CircularQueue.size());
+            System.out.println(CircularQueue.isEmpty());
+            System.out.println(CircularQueue.front());
+            System.out.println(CircularQueue.rear());
       }
 }

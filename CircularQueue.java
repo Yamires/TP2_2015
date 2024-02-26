@@ -96,7 +96,7 @@ public class CircularQueue implements QueueInterface {
             System.out.println(array[current]);
             current = (current + 1) % array.length;
         }
-        // Reset front to its original value
+
         front = (front + storedSize) % array.length;
     }
 
