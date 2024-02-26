@@ -86,6 +86,39 @@ public class CircularQueue implements QueueInterface {
             }
         }
     }
+
+    public void print() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        int current = front;
+        for (int i = 0; i < storedSize; i++) {
+            System.out.println(array[current]);
+            current = (current + 1) % array.length;
+        }
+        // Reset front to its original value
+        front = (front + storedSize) % array.length;
+    }
+
+
+    //Inverser l'ordre de la file d'attente circulaire
+    public void reverse() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        int[] tempArray = new int[storedSize];
+        int index = 0;
+
+        while (!isEmpty()) {
+            tempArray[index++] = dequeue();
+        }
+
+        for (int i = index - 1; i >= 0; i--) {
+            enqueue(tempArray[i]);
+        }
+    }
+
+
 }
 
 
