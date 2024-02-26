@@ -1,5 +1,4 @@
 public class CircularQueue implements QueueInterface {
-
     private static final int maxCapacity = 100;
     private int front;
     private int storedSize;
@@ -9,12 +8,12 @@ public class CircularQueue implements QueueInterface {
         array = new int[capacity];
     }
 
-    @Override
+    // Renvoie la taille de la file
     public int size() {
         return this.storedSize;
     }
 
-    @Override
+    //Renvoie si la file est vide ou non
     public boolean isEmpty() {
         return this.storedSize == 0;
     }
@@ -23,6 +22,7 @@ public class CircularQueue implements QueueInterface {
         return this.storedSize == this.array.length;
     }
 
+    //Permet d'obtenir le premier élément de la file
     public int front() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
@@ -37,6 +37,7 @@ public class CircularQueue implements QueueInterface {
         return array[front];
     }
 
+    //Permet d'obtenir le dernier élément de la file
     public int rear() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
@@ -44,7 +45,7 @@ public class CircularQueue implements QueueInterface {
         return array[(front + storedSize - 1) % array.length];
     }
 
-    @Override
+    // Insère une nouvelle valeur dans la file
     public void enqueue(int e) {
         if (isFull()) {
             throw new IllegalStateException("Queue is full");
@@ -54,7 +55,7 @@ public class CircularQueue implements QueueInterface {
         this.storedSize++;
     }
 
-    @Override
+    // Supprime un élément de la file
     public int dequeue() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
@@ -66,6 +67,36 @@ public class CircularQueue implements QueueInterface {
         return element;
     }
 
+    //Imprime la file d'attente circulaire
+    public void print() {
+        if (isEmpty()) {
+            throw new IllegalStateException("Queue is empty");
+        }
+        int current = front;
+        for (int i = 0; i < storedSize; i++) {
+            System.out.println(array[current]);
+            current = (current + 1) % array.length;
+        }
+        // Reset front to its original value
+        front = (front + storedSize) % array.length;
+    }
+
+    //Inverser l'ordre de la file d'attente circulaire
+    public void reverse(){
+        if (isEmpty()){
+            throw new IllegalStateException("Queue is empty");
+        }
+        int[] tempArray = new int[storedSize];
+        int index = 0;
+        while (!isEmpty()) {
+            tempArray[index++] = dequeue();
+        }
+
+        for (int i = index - 1; i >= 0; i--) {
+            enqueue(tempArray[i]);
+        }
+    }
+    //Renvoie vrai si l'élément est dans la file, faux sinon
     public boolean checkInQueue(int value) {
         for (int i = 0; i < storedSize; i++) {
             if (array[(front + i) % array.length] == value) {
@@ -75,6 +106,7 @@ public class CircularQueue implements QueueInterface {
         return false;
     }
 
+    // Retire la première apparition de la valeur
     public void remove(int value) {
         for (int i = 0; i < storedSize; i++) {
             if (array[(front + i) % array.length] == value) {
@@ -86,45 +118,4 @@ public class CircularQueue implements QueueInterface {
             }
         }
     }
-
-    public void print() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
-        }
-        int current = front;
-        for (int i = 0; i < storedSize; i++) {
-            System.out.println(array[current]);
-            current = (current + 1) % array.length;
-        }
-
-        front = (front + storedSize) % array.length;
-    }
-
-
-    //Inverser l'ordre de la file d'attente circulaire
-    public void reverse() {
-        if (isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
-        }
-        int[] tempArray = new int[storedSize];
-        int index = 0;
-
-        while (!isEmpty()) {
-            tempArray[index++] = dequeue();
-        }
-
-        for (int i = index - 1; i >= 0; i--) {
-            enqueue(tempArray[i]);
-        }
-    }
-
-
 }
-
-
-
-
-
-
-
-
