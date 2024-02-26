@@ -25,20 +25,23 @@ public class Main {
             System.out.println(SinglyLinkedList.returnNLast(2));
 
 
+            //on crée une file d'attente circulaire
             CircularQueue CircularQueue = new CircularQueue(8);
             CircularQueue.enqueue(40);
             CircularQueue.enqueue(10);
             CircularQueue.enqueue(50);
             CircularQueue.enqueue(20);
             CircularQueue.enqueue(60);
-
-            CircularQueue.reverse();
-            CircularQueue.print();
-
+            CircularQueue.enqueue(10);
+            CircularQueue.remove(10);
             CircularQueue.dequeue();
+            //On imprime la file
             System.out.println(CircularQueue.size());
             System.out.println(CircularQueue.isEmpty());
             System.out.println(CircularQueue.front());
             System.out.println(CircularQueue.rear());
+            System.out.println(CircularQueue.checkInQueue(1));
+            CircularQueue.reverse();
+            CircularQueue.print();
       }
 }
