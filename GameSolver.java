@@ -106,7 +106,7 @@ public class GameSolver {
 
         // Transmission pour chaque grille
         for (int i = 0; i < gridCount; i++) {
-            //solvingGame(grids[i]);
+
             System.out.println("Game solved in " +  solvingGame(grids[i]) + " iterations");
         }
     }
